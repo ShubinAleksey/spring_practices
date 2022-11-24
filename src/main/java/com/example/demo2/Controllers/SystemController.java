@@ -71,7 +71,6 @@ public class SystemController {
     public String delSystem(@PathVariable Long id) {
         System system_obj = systemRepository.findById(id).orElseThrow();
         systemRepository.delete(system_obj);
-        systemRepository.deleteById(id);
         return "redirect:/system/";
     }
 

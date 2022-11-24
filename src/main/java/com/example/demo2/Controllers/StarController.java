@@ -69,7 +69,6 @@ public class StarController {
     public String delStars(@PathVariable Long id) {
         Star star_obj = starRepository.findById(id).orElseThrow();
         starRepository.delete(star_obj);
-        starRepository.deleteById(id);
         return "redirect:/star/";
     }
 

@@ -70,7 +70,6 @@ public class GalaxyController {
     public String delGalaxy(@PathVariable Long id) {
         Galaxy galaxy_obj = galaxyRepository.findById(id).orElseThrow();
         galaxyRepository.delete(galaxy_obj);
-        galaxyRepository.deleteById(id);
         return "redirect:/galaxy/";
     }
 
