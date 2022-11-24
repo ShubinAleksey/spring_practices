@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Редактировать галактику</h1>
+<form method="post">
+    <label>Наименование галактики</label>
+    <input th:value="${object.name}" class="form-control" type="text" name="name">
+    <br>
+    <label>Масса галактики</label>
+    <input th:value="${object.galaxy_mass}" class="form-control" type="text" name="galaxy_mass">
+    <br>
+    <label>Радиус галактики</label>
+    <input th:value="${object.galaxy_radius}" class="form-control" type="number" name="galaxy_radius">
+    <br>
+    <label>Абсолютная звезда</label>
+    <input th:value="${object.absolute_star}" class="form-control" type="number" name="absolute_star">
+    <br>
+    <label>Количество звезд</label>
+    <input th:value="${object.total_stars}" class="form-control" type="number" name="total_stars">
+    <br>
+    <input class="btn btn-success" type="submit" value="Редактировать галактику">
+    <a class="btn btn-danger" href="/galaxy/">Назад</a>
+</form>
+</body>
+</html>

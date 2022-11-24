@@ -24,6 +24,16 @@
 </head>
 <body>
 <h1>Системы</h1>
+<div>
+  <form method="get" action="/system/filter/">
+    <input class="form-control" name="name" type="text" placeholder="Конкретный поиск" width="100">
+    <input class="btn btn-info" value="Найти" type="submit">
+  </form>
+  <form method="get" action="/system/filtercontains/">
+    <input class="form-control" name="name" type="text" placeholder="Поиск по ключу" width="100">
+    <input class="btn btn-info" value="Найти" type="submit">
+  </form>
+</div>
 <a href="/system/add" class="btn btn-success">Добавить систему</a>
 <table class="table">
   <tr>
@@ -32,6 +42,7 @@
     <th>Количество звезд</th>
     <th>Количество известных планет</th>
     <th>Количество спутников</th>
+    <th>Действие</th>
   </tr>
   <tr th:each="el : ${system_list}">
     <td th:text="${el.name}"></td>
@@ -39,6 +50,9 @@
     <td th:text="${el.total_stars}"></td>
     <td th:text="${el.total_known_planets}"></td>
     <td th:text="${el.total_moons}"></td>
+    <td>
+      <a class="btn btn-primary" th:href="'/system/detail/'+${el.UID}">Подробнее</a>
+    </td>
   </tr>
 </table>
 </body>

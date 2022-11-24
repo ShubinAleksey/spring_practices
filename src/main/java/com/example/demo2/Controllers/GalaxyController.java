@@ -5,10 +5,9 @@ import com.example.demo2.Repository.GalaxyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/galaxy")
@@ -37,5 +36,65 @@ public class GalaxyController {
         Galaxy new_galaxy = new Galaxy(name, galaxy_mass, galaxy_radius, absolute_star, total_stars);
         galaxyRepository.save(new_galaxy);
         return "redirect:/galaxy/";
+    }
+
+    @GetMapping("/filter/")
+    public String filter(
+            @RequestParam(name = "name") String name_galaxy,
+            Model model) {
+        List<Galaxy> galaxyList = galaxyRepository.findByName(name_galaxy);
+        model.addAttribute("galaxy_list", galaxyList);
+        return "galaxy/galaxy";
+    }
+
+    @GetMapping("/filtercontains/")
+    public String filterContains(
+            @RequestParam(name = "name") String name_galaxy,
+            Model model) {
+        List<Galaxy> galaxyList = galaxyRepository.findByNameContains(name_galaxy);
+        model.addAttribute("galaxy_list", galaxyList);
+        return "galaxy/galaxy";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detailGalaxy(
+            @PathVariable Long id,
+            Model model
+    ) {
+        Galaxy galaxy_obj = galaxyRepository.findById(id).orElseThrow();
+        model.addAttribute("one_galaxy", galaxy_obj);
+        return "/galaxy/info";
+    }
+
+    @GetMapping("/detail/{id}/del")
+    public String delGalaxy(@PathVariable Long id) {
+        Galaxy galaxy_obj = galaxyRepository.findById(id).orElseThrow();
+        galaxyRepository.delete(galaxy_obj);
+        galaxyRepository.deleteById(id);
+        return "redirect:/galaxy/";
+    }
+
+    @GetMapping("/detail/{id}/upd")
+    public String updateView(@PathVariable Long id, Model model) {
+        model.addAttribute("object",galaxyRepository.findById(id).orElseThrow());
+        return "galaxy/update";
+    }
+
+    @PostMapping("/detail/{id}/upd")
+    public String updateStar(@PathVariable Long id,
+                             @RequestParam String name,
+                             @RequestParam(name = "galaxy_mass") Long galaxy_mass,
+                             @RequestParam String galaxy_radius,
+                             @RequestParam String absolute_star,
+                             @RequestParam Integer total_stars
+                             ) {
+        Galaxy galaxy = galaxyRepository.findById(id).orElseThrow();
+        galaxy.setName(name);
+        galaxy.setGalaxy_mass(galaxy_mass);
+        galaxy.setGalaxy_radius(galaxy_radius);
+        galaxy.setAbsolute_star(absolute_star);
+        galaxy.setTotal_stars(total_stars);
+        galaxyRepository.save(galaxy);
+        return "redirect:/galaxy/detail/" + galaxy.getUID();
     }
 }
