@@ -21,7 +21,7 @@
     <p th:text="'Количество звезд: ' + ${one_galaxy.getTotal_stars()}"></p>
   </div>
   <a th:href="'/galaxy/detail/' + ${one_galaxy.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
-  <form th:action="'/galaxy/detail/' + ${one_galaxy.UID} + '/del'" method="post">
+  <form th:action="'/galaxy/detail/' + ${one_galaxy.UID} + '/del'" method="get">
     <button type="submit" class="btn btn-danger">Удалить</button>
   </form>
   <a href="/galaxy/" class="btn btn-success">Назад</a>

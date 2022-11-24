@@ -19,7 +19,7 @@
   <p th:text="'Светимость ' + ${one_star.lumen} + ' люмен'"></p>
 </div>
   <a th:href="'/star/detail/' + ${one_star.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
-  <form th:action="'/star/detail/' + ${one_star.UID} + '/del'" method="post">
+  <form th:action="'/star/detail/' + ${one_star.UID} + '/del'" method="get">
   <button type="submit" class="btn btn-danger">Удалить</button>
   </form>
 <a href="/star/" class="btn btn-success">Назад</a>

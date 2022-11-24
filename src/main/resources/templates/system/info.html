@@ -21,7 +21,7 @@
     <p th:text="'Количество спутников: ' + ${one_system.getTotal_moons()}"></p>
   </div>
   <a th:href="'/system/detail/' + ${one_system.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
-  <form th:action="'/system/detail/' + ${one_system.UID} + '/del'" method="post">
+  <form th:action="'/system/detail/' + ${one_system.UID} + '/del'" method="get">
     <button type="submit" class="btn btn-danger">Удалить</button>
   </form>
   <a href="/system/" class="btn btn-success">Назад</a>
