@@ -4,16 +4,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 @Entity
 public class Galaxy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UID;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
+    @Size(min = 2, max = 30, message = "Размер данного поля должен быть в диапозоне от 2 до 30")
     private String name;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Max(value = 999999999, message = "Значение должно быть не выше 999999999")
     private Long galaxy_mass;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
+    @Size(min = 2, max = 10, message = "Размер данного поля должен быть в диапозоне от 2 до 10")
     private String galaxy_radius;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
+    @Size(min = 1, max = 3, message = "Размер данного поля должен быть в диапозоне от 1 до 3")
     private String absolute_star;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Positive(message = "Звезд не должно быть меньше 0")
+    @Max(value = 9999, message = "Значение должно быть не выше 9999")
     private Integer total_stars;
 
     public Galaxy() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,21 +8,26 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Редактировать галактику</h1>
-<form method="post">
+<form method="post" th:object="${galaxy}" th:action="${'/galaxy/detail/{id}/upd'}" >
     <label>Наименование галактики</label>
-    <input th:value="${object.name}" class="form-control" type="text" name="name">
+    <input th:field="*{name}" class="form-control" type="text" name="name">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></div>
     <br>
     <label>Масса галактики</label>
-    <input th:value="${object.galaxy_mass}" class="form-control" type="text" name="galaxy_mass">
+    <input th:field="*{galaxy_mass}" class="form-control" type="number" name="galaxy_mass">
+    <div th:if="${#fields.hasErrors('galaxy_mass')}" th:errors="*{galaxy_mass}" style="color: red"></div>
     <br>
     <label>Радиус галактики</label>
-    <input th:value="${object.galaxy_radius}" class="form-control" type="number" name="galaxy_radius">
+    <input  th:field="*{galaxy_radius}" class="form-control" type="number" name="galaxy_radius">
+    <div th:if="${#fields.hasErrors('galaxy_radius')}" th:errors="*{galaxy_radius}" style="color: red"></div>
     <br>
     <label>Абсолютная звезда</label>
-    <input th:value="${object.absolute_star}" class="form-control" type="number" name="absolute_star">
+    <input  th:field="*{absolute_star}" class="form-control" type="number" name="absolute_star">
+    <div th:if="${#fields.hasErrors('absolute_star')}" th:errors="*{absolute_star}" style="color: red"></div>
     <br>
     <label>Количество звезд</label>
-    <input th:value="${object.total_stars}" class="form-control" type="number" name="total_stars">
+    <input  th:field="*{total_stars}" class="form-control" type="number" name="total_stars">
+    <div th:if="${#fields.hasErrors('total_stars')}" th:errors="*{total_stars}" style="color: red"></div>
     <br>
     <input class="btn btn-success" type="submit" value="Редактировать галактику">
     <a class="btn btn-danger" href="/galaxy/">Назад</a>

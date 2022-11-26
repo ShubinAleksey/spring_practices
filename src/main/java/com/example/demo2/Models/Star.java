@@ -4,14 +4,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Star {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UID;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
+    @Size(min = 2, max = 30, message = "Размер данного поля должен быть в диапозоне от 2 до 30")
     private  String name;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
+    @Size(min = 2, max = 30, message = "Размер данного поля должен быть в диапозоне от 2 до 30")
     private  String class_star;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 0, message = "Значение в поле не может быть меньше нуля")
     private  Integer lumen;
 
     public Star() {

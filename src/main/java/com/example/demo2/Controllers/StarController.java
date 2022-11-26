@@ -1,12 +1,15 @@
 package com.example.demo2.Controllers;
 
+import com.example.demo2.Models.Galaxy;
 import com.example.demo2.Models.Star;
 import com.example.demo2.Repository.StarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -24,16 +27,16 @@ public class StarController {
     }
 
     @GetMapping("/add")
-    public String AddView() {
+    public String AddView(Star star) {
         return "star/star-add";
     }
 
     @PostMapping("/add")
-    public String AddStar(@RequestParam(name = "name") String name,
-                          @RequestParam(name = "class") String class_star,
-                          @RequestParam(name = "lumen") int lumen) {
-        Star new_star = new Star(name, class_star, lumen);
-        starRepository.save(new_star);
+    public String AddStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "star/star-add";
+        }
+        starRepository.save(star);
         return "redirect:/star/";
     }
 
@@ -73,20 +76,16 @@ public class StarController {
     }
 
     @GetMapping("/detail/{id}/upd")
-    public String updateView(@PathVariable Long id, Model model) {
-        model.addAttribute("object",starRepository.findById(id).orElseThrow());
+    public String updateView(@PathVariable Long id, Model model, Star star) {
+        model.addAttribute("star",starRepository.findById(id).orElseThrow());
         return "star/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateStar(@PathVariable Long id,
-                             @RequestParam String name,
-                             @RequestParam(name = "class") String class_star,
-                             @RequestParam Integer lumen) {
-        Star star = starRepository.findById(id).orElseThrow();
-        star.setName(name);
-        star.setClass_star(class_star);
-        star.setLumen(lumen);
+    public String updateStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "star/update";
+        }
         starRepository.save(star);
         return "redirect:/star/detail/" + star.getUID();
     }

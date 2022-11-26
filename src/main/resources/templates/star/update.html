@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,15 +8,18 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Редактировать звезду</h1>
-<form method="post">
+<form method="post" th:object="${star}" th:action="${'/star/detail/{id}/upd'}">
   <label>Наименование звезды</label>
-  <input th:value="${object.name}" class="form-control" type="text" name="name">
+  <input th:field="*{name}" class="form-control" type="text" name="name">
+  <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></div>
   <br>
   <label>Класс</label>
-  <input th:value="${object.class_star}" class="form-control" type="text" name="class">
+  <input th:field="*{class_star}" class="form-control" type="text" name="class">
+  <div th:if="${#fields.hasErrors('class_star')}" th:errors="*{class_star}" style="color: red"></div>
   <br>
   <label>Люмен</label>
-  <input th:value="${object.lumen}" class="form-control" type="number" name="lumen">
+  <input th:field="*{lumen}" class="form-control" type="number" name="lumen">
+  <div th:if="${#fields.hasErrors('lumen')}" th:errors="*{lumen}" style="color: red"></div>
   <input class="btn btn-success" type="submit" value="Редактировать звезду">
   <a class="btn btn-danger" href="/star/">Назад</a>
 </form>

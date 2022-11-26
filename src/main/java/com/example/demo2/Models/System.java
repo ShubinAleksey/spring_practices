@@ -4,16 +4,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 @Entity
 public class System {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UID;
+    @NotNull(message = "Поле не должно быть пустым")
+    @NotBlank
     private String name;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Positive(message = "Масса не должна быть меньше 0")
+    @Max(value = 999999999, message = "Значение должно быть не выше 999999999")
     private Long system_mass;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Positive(message = "Звезд не должно быть меньше 0")
+    @Max(value = 5, message = "Значение должно быть не выше 5")
     private Integer total_stars;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Positive(message = "Планет не должно быть меньше 0")
+    @Max(value = 9999, message = "Значение должно быть не выше 9999")
     private Integer total_known_planets;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 0, message = "Значение в поле не может быть меньше нуля")
+    @Max(value = 99999, message = "Значение должно быть не выше 99999")
     private Integer total_moons;
     public System() {
 

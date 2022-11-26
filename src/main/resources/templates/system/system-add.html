@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head >
   <meta charset="UTF-8">
   <title>Добавление системы</title>
@@ -24,21 +24,26 @@
 </head>
 <body>
 <h1>Добавить систему</h1>
-<form method="post">
+<form method="post" th:object="${system}" th:action="${'/system/add'}">
   <label>Наименование системы</label>
-  <input class="form-control" type="text" name="name">
+  <input th:field="*{name}" class="form-control" type="text" name="name">
+  <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></div>
   <br>
   <label>Масса системы</label>
-  <input class="form-control" type="text" name="system_mass">
+  <input th:field="*{system_mass}" class="form-control" type="number" name="system_mass">
+  <div th:if="${#fields.hasErrors('system_mass')}" th:errors="*{system_mass}" style="color: red"></div>
   <br>
   <label>Количество звезд</label>
-  <input class="form-control" type="number" name="total_stars">
+  <input th:field="*{total_stars}" class="form-control" type="number" name="total_stars">
+  <div th:if="${#fields.hasErrors('total_stars')}" th:errors="*{total_stars}" style="color: red"></div>
   <br>
   <label>Количество известных планет</label>
-  <input class="form-control" type="number" name="total_known_planets">
+  <input th:field="*{total_known_planets}" class="form-control" type="number" name="total_known_planets">
+  <div th:if="${#fields.hasErrors('total_known_planets')}" th:errors="*{total_known_planets}" style="color: red"></div>
   <br>
   <label>Количество спутников</label>
-  <input class="form-control" type="number" name="total_moons">
+  <input th:field="*{total_moons}" class="form-control" type="number" name="total_moons">
+  <div th:if="${#fields.hasErrors('total_moons')}" th:errors="*{total_moons}" style="color: red"></div>
   <input class="btn btn-success" type="submit" value="Добавить систему">
   <a class="btn btn-danger" href="/system/">Назад</a>
 </form>
