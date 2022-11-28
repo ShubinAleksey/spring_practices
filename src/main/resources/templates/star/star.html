@@ -30,12 +30,14 @@
         <th>Название</th>
         <th>Класс</th>
         <th>Люмен</th>
+        <th>Система</th>
         <th>Действие</th>
     </tr>
     <tr th:each="el : ${star_list}">
         <td th:text="${el.name}"></td>
         <td th:text="${el.class_star}"></td>
         <td th:text="${el.lumen}"></td>
+        <td th:text="${el.system.name}"></td>
         <td>
             <a class="btn btn-primary" th:href="'/star/detail/'+${el.UID}">Подробнее</a>
         </td>

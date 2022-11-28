@@ -1,12 +1,11 @@
 package com.example.demo2.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
+@Table(name = "systems")
 public class System {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +29,44 @@ public class System {
     @Min(value = 0, message = "Значение в поле не может быть меньше нуля")
     @Max(value = 99999, message = "Значение должно быть не выше 99999")
     private Integer total_moons;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "galaxy_uid")
+    public Galaxy galaxy;
+
+    @OneToMany(mappedBy = "system", fetch = FetchType.EAGER)
+    public List<Star> star;
+
+    @ManyToMany()
+    @JoinTable(name = "galaxyshutles_system",
+            joinColumns = @JoinColumn(name = "galaxyshutle_uid"),
+            inverseJoinColumns = @JoinColumn(name = "system_uid"))
+    public List<GalaxyShutle> galaxyShutle;
+
+    public List<Star> getStar() {
+        return star;
+    }
+
+    public void setStar(List<Star> star) {
+        this.star = star;
+    }
+
+    public List<GalaxyShutle> getGalaxyShutle() {
+        return galaxyShutle;
+    }
+
+    public void setGalaxyShutle(List<GalaxyShutle> galaxyShutle) {
+        this.galaxyShutle = galaxyShutle;
+    }
+
+    public Galaxy getGalaxy() {
+        return galaxy;
+    }
+
+    public void setGalaxy(Galaxy galaxy) {
+        this.galaxy = galaxy;
+    }
+
     public System() {
 
     }

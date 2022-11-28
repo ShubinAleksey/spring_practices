@@ -12,5 +12,5 @@ public interface SystemRepository extends CrudRepository<System, Long> {
     public List<System> findByNameContains(String name);
 
     @Query(value = "SELECT * FROM Star WHERE system_mass = ?1", nativeQuery = true)
-    List<Star> selectSystem(String system_mass);
+    List<System> selectSystem(String system_mass);
 }

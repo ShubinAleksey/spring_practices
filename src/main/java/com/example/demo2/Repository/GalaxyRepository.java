@@ -12,5 +12,5 @@ public interface GalaxyRepository extends CrudRepository<Galaxy, Long> {
     public List<Galaxy> findByNameContains(String name);
 
     @Query(value = "SELECT * FROM Star WHERE galaxy_mass = ?1", nativeQuery = true)
-    List<Star> selectGalaxy(String galaxy_mass);
+    List<Galaxy> selectGalaxy(String galaxy_mass);
 }

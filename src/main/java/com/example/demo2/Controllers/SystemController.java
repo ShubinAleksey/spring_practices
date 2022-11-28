@@ -3,8 +3,10 @@ package com.example.demo2.Controllers;
 import com.example.demo2.Models.Galaxy;
 import com.example.demo2.Models.Star;
 import com.example.demo2.Models.System;
+import com.example.demo2.Repository.GalaxyRepository;
 import com.example.demo2.Repository.SystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,9 @@ public class SystemController {
     @Autowired
     SystemRepository systemRepository;
 
+    @Autowired
+    GalaxyRepository galaxyRepository;
+
     @GetMapping("/")
     public String index(Model model) {
         Iterable<System> systemIterable = systemRepository.findAll();
@@ -27,13 +32,17 @@ public class SystemController {
     }
 
     @GetMapping("/add")
-    public String AddView(System system) {
+    public String AddView(System system, Model model) {
+        Iterable<Galaxy> galaxies = galaxyRepository.findAll();
+        model.addAttribute("galaxies", galaxies);
         return "system/system-add";
     }
 
     @PostMapping("/add")
-    public String AddSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult) {
+    public String AddSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            Iterable<Galaxy> galaxies = galaxyRepository.findAll();
+            model.addAttribute("galaxies", galaxies);
             return "system/system-add";
         }
         systemRepository.save(system);
@@ -77,13 +86,17 @@ public class SystemController {
 
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model, System system) {
+        Iterable<Galaxy> galaxies = galaxyRepository.findAll();
+        model.addAttribute("galaxies", galaxies);
         model.addAttribute("system",systemRepository.findById(id).orElseThrow());
         return "system/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult) {
+    public String updateSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
+            Iterable<Galaxy> galaxies = galaxyRepository.findAll();
+            model.addAttribute("galaxies", galaxies);
             return "system/update";
         }
         systemRepository.save(system);

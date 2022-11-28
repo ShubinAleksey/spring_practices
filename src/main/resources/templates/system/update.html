@@ -28,6 +28,12 @@
     <label>Количество спутников</label>
     <input th:field="*{total_moons}" class="form-control" type="number" name="total_moons">
     <div th:if="${#fields.hasErrors('total_moons')}" th:errors="*{total_moons}" style="color: red"></div>
+    <br>
+    <label>Галактика</label>
+    <select th:field="*{galaxy}">
+        <option th:each="element : ${galaxies}" th:text="${element.name}" th:value="${element.UID}"></option>
+    </select>
+    <br>
     <input class="btn btn-success" type="submit" value="Редактировать систему">
     <a class="btn btn-danger" href="/system/">Назад</a>
 </form>

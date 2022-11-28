@@ -1,12 +1,10 @@
 package com.example.demo2.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
+@Table(name = "galaxys")
 public class Galaxy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +28,17 @@ public class Galaxy {
     @Positive(message = "Звезд не должно быть меньше 0")
     @Max(value = 9999, message = "Значение должно быть не выше 9999")
     private Integer total_stars;
+
+    @OneToOne(optional = true, mappedBy = "galaxy")
+    public System system;
+
+    public System getSystem() {
+        return system;
+    }
+
+    public void setSystem(System system) {
+        this.system = system;
+    }
 
     public Galaxy() {
 

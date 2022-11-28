@@ -20,6 +20,10 @@
   <label>Люмен</label>
   <input th:field="*{lumen}" class="form-control" type="number" name="lumen">
   <div th:if="${#fields.hasErrors('lumen')}" th:errors="*{lumen}" style="color: red"></div>
+  <br>
+  <select th:field="*{system}">
+    <option th:each="element : ${systems}" th:text="${element.name}" th:value="${element.UID}"></option>
+  </select>
   <input class="btn btn-success" type="submit" value="Редактировать звезду">
   <a class="btn btn-danger" href="/star/">Назад</a>
 </form>

@@ -17,6 +17,7 @@
 <div class="container">
   <h2 th:text="'Класс звезды: ' + ${one_star.getClass_star()}"></h2>
   <p th:text="'Светимость ' + ${one_star.lumen} + ' люмен'"></p>
+  <p th:text="'Система: ' + ${one_star.system.name}"></p>
 </div>
   <a th:href="'/star/detail/' + ${one_star.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
   <form th:action="'/star/detail/' + ${one_star.UID} + '/del'" method="get">

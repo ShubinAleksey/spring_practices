@@ -2,7 +2,9 @@ package com.example.demo2.Controllers;
 
 import com.example.demo2.Models.Galaxy;
 import com.example.demo2.Models.Star;
+import com.example.demo2.Models.System;
 import com.example.demo2.Repository.StarRepository;
+import com.example.demo2.Repository.SystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ public class StarController {
     @Autowired
     StarRepository starRepository;
 
+    @Autowired
+    SystemRepository systemRepository;
+
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Star> starIterable = starRepository.findAll();
@@ -27,13 +32,17 @@ public class StarController {
     }
 
     @GetMapping("/add")
-    public String AddView(Star star) {
+    public String AddView(Star star, Model model) {
+        Iterable<System> systems = systemRepository.findAll();
+        model.addAttribute("systems", systems);
         return "star/star-add";
     }
 
     @PostMapping("/add")
-    public String AddStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult) {
+    public String AddStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            Iterable<System> systems = systemRepository.findAll();
+            model.addAttribute("systems", systems);
             return "star/star-add";
         }
         starRepository.save(star);
@@ -77,13 +86,17 @@ public class StarController {
 
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model, Star star) {
+        Iterable<System> systems = systemRepository.findAll();
+        model.addAttribute("systems", systems);
         model.addAttribute("star",starRepository.findById(id).orElseThrow());
         return "star/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult) {
+    public String updateStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
+            Iterable<System> systems = systemRepository.findAll();
+            model.addAttribute("systems", systems);
             return "star/update";
         }
         starRepository.save(star);

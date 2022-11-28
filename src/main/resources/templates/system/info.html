@@ -19,6 +19,7 @@
     <p th:text="'Количество звезд: ' + ${one_system.getTotal_stars()}"></p>
     <p th:text="'Количество известных планет: ' + ${one_system.getTotal_known_planets()}"></p>
     <p th:text="'Количество спутников: ' + ${one_system.getTotal_moons()}"></p>
+    <p th:text="'Галактика: ' + ${one_system.galaxy.name}"></p>
   </div>
   <a th:href="'/system/detail/' + ${one_system.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
   <form th:action="'/system/detail/' + ${one_system.UID} + '/del'" method="get">
