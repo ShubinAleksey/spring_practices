@@ -3,6 +3,7 @@ package com.example.demo2.Controllers;
 import com.example.demo2.Models.Galaxy;
 import com.example.demo2.Repository.GalaxyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/galaxy")
+@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class GalaxyController {
     @Autowired
     GalaxyRepository galaxyRepository;
@@ -80,10 +82,15 @@ public class GalaxyController {
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateStar(@ModelAttribute("galaxy") @Valid Galaxy galaxy, BindingResult bindingResult) {
+    public String updateStar(@PathVariable Long id, @ModelAttribute("galaxy") @Valid Galaxy galaxy, BindingResult bindingResult) {
+        if(!galaxyRepository.existsById(id)) {
+            return "redirect:/galaxy/";
+        }
         if(bindingResult.hasErrors()) {
+            galaxy.setUID(id);
             return "galaxy/update";
         }
+        galaxy.setUID(id);
         galaxyRepository.save(galaxy);
         return "redirect:/galaxy/detail/" + galaxy.getUID();
     }

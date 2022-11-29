@@ -6,17 +6,20 @@ import com.example.demo2.Models.System;
 import com.example.demo2.Repository.GalaxyRepository;
 import com.example.demo2.Repository.SystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/system")
+@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class SystemController {
     @Autowired
     SystemRepository systemRepository;
@@ -85,20 +88,30 @@ public class SystemController {
     }
 
     @GetMapping("/detail/{id}/upd")
-    public String updateView(@PathVariable Long id, Model model, System system) {
+    public String updateView(@PathVariable Long id, Model model) {
+        Optional<System> system = systemRepository.findById(id);
+        ArrayList<System> systemArrayList = new ArrayList<>();
+        system.ifPresent(systemArrayList::add);
         Iterable<Galaxy> galaxies = galaxyRepository.findAll();
         model.addAttribute("galaxies", galaxies);
-        model.addAttribute("system",systemRepository.findById(id).orElseThrow());
+        model.addAttribute("system",systemArrayList.get(0));
         return "system/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
+    public String updateSystem(@PathVariable Long id, @ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
+        if(!systemRepository.existsById(id)) {
+            return "redirect:/system/";
+        }
         if(bindingResult.hasErrors()) {
             Iterable<Galaxy> galaxies = galaxyRepository.findAll();
             model.addAttribute("galaxies", galaxies);
+            system.setUID(id);
             return "system/update";
         }
+        Iterable<Galaxy> galaxies = galaxyRepository.findAll();
+        model.addAttribute("galaxies", galaxies);
+        system.setUID(id);
         systemRepository.save(system);
         return "redirect:/system/detail/" + system.getUID();
     }

@@ -37,7 +37,9 @@
         <td th:text="${el.name}"></td>
         <td th:text="${el.class_star}"></td>
         <td th:text="${el.lumen}"></td>
-        <td th:text="${el.system.name}"></td>
+        <div th:each="sys : ${el.system}">
+            <td th:text="${sys.name}"></td>
+        </div>
         <td>
             <a class="btn btn-primary" th:href="'/star/detail/'+${el.UID}">Подробнее</a>
         </td>

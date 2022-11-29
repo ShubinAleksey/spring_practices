@@ -19,6 +19,11 @@
             <li><a href="/galaxy/" class="nav-link px-2 link-dark">Список галактик</a></li>
             <li><a href="/system/" class="nav-link px-2 link-dark">Список систем</a></li>
             <li><a href="/galaxyshutle/" class="nav-link px-2 link-dark">Список галактических шатлов</a></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn btn-danger" value="Выход"/>
+                </form>
+            </li>
         </ul>
     </div>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -44,9 +49,11 @@
     </tr>
     <tr th:each="el : ${galaxyShutle_list}">
         <td th:text="${el.name}"></td>
-        <div th:each="sys : ${el.system}">
-            <td th:text="${sys.name}"></td>
-        </div>
+        <td>
+            <div th:each="sys : ${el.system}">
+                <p th:text="${sys.name}"></p>
+            </div>
+        </td>
         <td>
             <a class="btn btn-primary" th:href="'/galaxyshutle/detail/'+${el.UID}">Подробнее</a>
         </td>

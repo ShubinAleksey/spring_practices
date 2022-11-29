@@ -1,21 +1,26 @@
 package com.example.demo2.Controllers;
 
 import com.example.demo2.Models.Galaxy;
+import com.example.demo2.Models.GalaxyShutle;
 import com.example.demo2.Models.Star;
 import com.example.demo2.Models.System;
 import com.example.demo2.Repository.StarRepository;
 import com.example.demo2.Repository.SystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/star")
+@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class StarController {
 
     @Autowired
@@ -85,20 +90,32 @@ public class StarController {
     }
 
     @GetMapping("/detail/{id}/upd")
-    public String updateView(@PathVariable Long id, Model model, Star star) {
+    public String updateView(@PathVariable Long id, Model model) {
+        Optional<Star> star = starRepository.findById(id);
+        ArrayList<Star> starArrayList = new ArrayList<>();
+        star.ifPresent(starArrayList::add);
         Iterable<System> systems = systemRepository.findAll();
         model.addAttribute("systems", systems);
-        model.addAttribute("star",starRepository.findById(id).orElseThrow());
+        model.addAttribute("star",starArrayList.get(0));
         return "star/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult, Model model) {
+    public String updateStar(@PathVariable Long id, @ModelAttribute("star") @Valid Star star,
+                             BindingResult bindingResult,
+                             Model model) {
+        if(!starRepository.existsById(id)) {
+            return "redirect:/star/";
+        }
         if(bindingResult.hasErrors()) {
             Iterable<System> systems = systemRepository.findAll();
             model.addAttribute("systems", systems);
+            star.setUID(id);
             return "star/update";
         }
+        Iterable<System> systems = systemRepository.findAll();
+        model.addAttribute("systems", systems);
+        star.setUID(id);
         starRepository.save(star);
         return "redirect:/star/detail/" + star.getUID();
     }
