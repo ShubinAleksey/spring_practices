@@ -29,7 +29,7 @@ public class Galaxy {
     @Max(value = 9999, message = "Значение должно быть не выше 9999")
     private Integer total_stars;
 
-    @OneToOne(optional = true, mappedBy = "galaxy")
+    @OneToOne(optional = true, mappedBy = "galaxy", orphanRemoval = true)
     public System system;
 
     public System getSystem() {

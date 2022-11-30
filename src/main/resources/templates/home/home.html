@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>HomePage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
+<header th:insert="/fragments/header :: headerMain"></header>
 <h1>Домашняя страница</h1>
-<a href="/star/">Перейти к звездам</a>
-<a href="/galaxy/">Перейти к галактикам</a>
-<a href="/system/">Перейти к системам</a>
-<a href="/galaxyshutle/">Перейти к галактическим шатлам</a>
+<a href="/star/" class="btn btn-primary">Перейти к звездам</a>
+<a href="/galaxy/" class="btn btn-primary">Перейти к галактикам</a>
+<a href="/system/" class="btn btn-primary">Перейти к системам</a>
+<a href="/galaxyshutle/" class="btn btn-primary">Перейти к галактическим шатлам</a>
 </body>
 </html>
