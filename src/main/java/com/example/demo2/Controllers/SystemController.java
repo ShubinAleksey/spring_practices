@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/system")
-@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class SystemController {
     @Autowired
     SystemRepository systemRepository;
@@ -34,6 +33,7 @@ public class SystemController {
         return "/system/system";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/add")
     public String AddView(System system, Model model) {
         Iterable<Galaxy> galaxies = galaxyRepository.findAll();
@@ -41,6 +41,7 @@ public class SystemController {
         return "system/system-add";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/add")
     public String AddSystem(@ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -80,6 +81,7 @@ public class SystemController {
         return "/system/info";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/del")
     public String delSystem(@PathVariable Long id) {
         System system_obj = systemRepository.findById(id).orElseThrow();
@@ -87,6 +89,7 @@ public class SystemController {
         return "redirect:/system/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<System> system = systemRepository.findById(id);
@@ -98,6 +101,7 @@ public class SystemController {
         return "system/update";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/detail/{id}/upd")
     public String updateSystem(@PathVariable Long id, @ModelAttribute("system") @Valid System system, BindingResult bindingResult, Model model) {
         if(!systemRepository.existsById(id)) {

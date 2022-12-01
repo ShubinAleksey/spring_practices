@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/star")
-@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class StarController {
 
     @Autowired
@@ -36,6 +35,7 @@ public class StarController {
         return "/star/star";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/add")
     public String AddView(Star star, Model model) {
         Iterable<System> systems = systemRepository.findAll();
@@ -43,6 +43,7 @@ public class StarController {
         return "star/star-add";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("star") @Valid Star star, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -82,6 +83,7 @@ public class StarController {
         return "/star/info";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         Star star_obj = starRepository.findById(id).orElseThrow();
@@ -89,6 +91,7 @@ public class StarController {
         return "redirect:/star/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<Star> star = starRepository.findById(id);
@@ -100,6 +103,7 @@ public class StarController {
         return "star/update";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("star") @Valid Star star,
                              BindingResult bindingResult,

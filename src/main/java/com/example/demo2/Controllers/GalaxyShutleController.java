@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/galaxyshutle")
-@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 public class GalaxyShutleController {
 
     @Autowired
@@ -33,6 +32,7 @@ public class GalaxyShutleController {
         return "/galaxyshutle/galaxyshutle";
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @GetMapping("/add")
     public String AddView(GalaxyShutle galaxyShutle, Model model) {
         Iterable<System> systems = systemRepository.findAll();
@@ -40,6 +40,7 @@ public class GalaxyShutleController {
         return "galaxyshutle/galaxyshutle-add";
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("galaxyShutle") @Valid GalaxyShutle galaxyShutle, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -69,6 +70,7 @@ public class GalaxyShutleController {
         return "galaxyshutle/galaxyshutle";
     }
 
+
     @GetMapping("/detail/{id}")
     public String detailStar(
             @PathVariable Long id,
@@ -79,6 +81,7 @@ public class GalaxyShutleController {
         return "/galaxyshutle/info";
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         GalaxyShutle galaxyShutle_obj = galaxyShutleRepository.findById(id).orElseThrow();
@@ -86,6 +89,7 @@ public class GalaxyShutleController {
         return "redirect:/galaxyshutle/";
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         if(!galaxyShutleRepository.existsById(id)) {
@@ -100,6 +104,7 @@ public class GalaxyShutleController {
         return "galaxyshutle/update";
     }
 
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("galaxyShutle") @Valid GalaxyShutle galaxyShutle, BindingResult bindingResult, Model model) {
         if(!galaxyShutleRepository.existsById(id)) {

@@ -14,7 +14,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/galaxy")
-@PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
 public class GalaxyController {
     @Autowired
     GalaxyRepository galaxyRepository;
@@ -26,11 +25,13 @@ public class GalaxyController {
         return "/galaxy/galaxy";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/add")
     public String AddView(Galaxy galaxy) {
         return "galaxy/galaxy-add";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("galaxy") @Valid Galaxy galaxy, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -68,6 +69,7 @@ public class GalaxyController {
         return "/galaxy/info";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/del")
     public String delGalaxy(@PathVariable Long id) {
         Galaxy galaxy_obj = galaxyRepository.findById(id).orElseThrow();
@@ -75,12 +77,14 @@ public class GalaxyController {
         return "redirect:/galaxy/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model, Galaxy galaxy) {
         model.addAttribute("galaxy",galaxyRepository.findById(id).orElseThrow());
         return "galaxy/update";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','NASA')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("galaxy") @Valid Galaxy galaxy, BindingResult bindingResult) {
         if(!galaxyRepository.existsById(id)) {
