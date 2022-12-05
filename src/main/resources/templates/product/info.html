@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукт</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<div class="container">
+    <h1 th:text="'Наименование продукта: ' + ${one_product.productName}"></h1>
+    <div class="container">
+        <p th:text="'Цена: ' + ${one_product.getProductPrice()}"></p>
+        <div th:each="sys : ${one_product.colorProduct}">
+            <p th:text="'Цвет: ' + ${sys.colorName}"></p>
+        </div>
+        <div th:each="sys : ${one_product.sizeProduct}">
+            <p th:text="'Размер: ' + ${sys.sizeName}"></p>
+        </div>
+        <div th:each="sys : ${one_product.typeProduct}">
+            <p th:text="'Тип: ' + ${sys.typeName}"></p>
+        </div>
+    </div>
+    <a th:href="'/product/detail/' + ${one_product.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/product/detail/' + ${one_product.UID} + '/del'" method="get">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/product/" class="btn btn-success">Назад</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>Добавление контроля поставки</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Добавить контроль поставки</h1>
+<form method="post" th:object="${inventoryControl}" th:action="${'/inventorycontrol/add'}">
+    <label>Наименование документа</label>
+    <input th:field="*{documentName}" class="form-control" type="text" name="documentName">
+    <div th:if="${#fields.hasErrors('documentName')}" th:errors="*{documentName}" style="color: red"></div>
+    <br>
+    <label>Склад</label>
+    <input th:field="*{warehouse}" class="form-control" type="text" name="warehouse">
+    <div th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}" style="color: red"></div>
+    <br>
+    <label>Дата</label>
+    <input th:field="*{date}" class="form-control" type="date" name="date">
+    <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color: red"></div>
+    <br>
+    <label>Номер накладной</label>
+    <input th:field="*{invoiceNumber}" class="form-control" type="number" name="invoiceNumber">
+    <div th:if="${#fields.hasErrors('invoiceNumber')}" th:errors="*{invoiceNumber}" style="color: red"></div>
+    <br>
+    <label>Стоимость</label>
+    <input th:field="*{cost}" class="form-control" type="number" name="cost">
+    <div th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" style="color: red"></div>
+    <br>
+    <label>Поставка</label>
+    <select th:field="*{delivery}">
+        <option th:each="element : ${deliveries}" th:text="${element.dateDelivery}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <input class="btn btn-success" type="submit" value="Добавить контроль поставки">
+    <a class="btn btn-danger" href="/inventorycontrol/">Назад</a>
+</form>
+</body>
+</html>

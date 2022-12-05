@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Чек</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<div class="container">
+    <h1 th:text="'Чек: ' + ${one_check.checkNumber}"></h1>
+    <div class="container">
+        <p th:text="'ИНН: ' + ${one_check.getITN()}"></p>
+        <p th:text="'Дата печати: ' + ${one_check.getDateOfSeal()}"></p>
+        <div th:each="sys : ${one_check.order}">
+            <p th:text="'Заказ: ' + ${sys.orderName}"></p>
+        </div>
+        <div th:each="sys : ${one_check.user}">
+            <p th:text="'Кассир: ' + ${sys.surname}"></p>
+        </div>
+    </div>
+    <a th:href="'/check/detail/' + ${one_check.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/check/detail/' + ${one_check.UID} + '/del'" method="get">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/star/" class="btn btn-success">Назад</a>
+</div>
+</body>
+</html>

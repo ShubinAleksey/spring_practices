@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование чека</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Редактировать чек</h1>
+<form method="post" th:object="${check}" th:action="'/check/detail/' + *{getUID()} + '/upd'">
+    <label>Номер чека</label>
+    <input th:field="*{checkNumber}" class="form-control" type="number" name="checkNumber">
+    <div th:if="${#fields.hasErrors('checkNumber')}" th:errors="*{checkNumber}" style="color: red"></div>
+    <br>
+    <label>ИНН</label>
+    <input th:field="*{ITN}" class="form-control" type="number" name="ITN">
+    <div th:if="${#fields.hasErrors('ITN')}" th:errors="*{ITN}" style="color: red"></div>
+    <br>
+    <label>Дата печати</label>
+    <input th:field="*{dateOfSeal}" class="form-control" type="date" name="dateOfSeal">
+    <div th:if="${#fields.hasErrors('dateOfSeal')}" th:errors="*{dateOfSeal}" style="color: red"></div>
+    <br>
+    <label>Заказ</label>
+    <select th:field="*{order}">
+        <option th:each="element : ${orders}" th:text="${element.orderName}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <label>Кассир</label>
+    <select th:field="*{user}">
+        <option th:each="element : ${users}" th:text="${element.surname}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <input class="btn btn-success" type="submit" value="Редактировать чек">
+    <a class="btn btn-danger" href="/check/">Назад</a>
+</form>
+</body>
+</html>

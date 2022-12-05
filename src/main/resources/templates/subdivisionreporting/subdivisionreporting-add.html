@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>Добавление отчета разделов</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Добавить отчет разделов</h1>
+<form method="post" th:object="${subdivisionReporting}" th:action="${'/subdivisionreporting/add'}">
+    <label>Наименование документа</label>
+    <input th:field="*{documentName}" class="form-control" type="text" name="documentName">
+    <div th:if="${#fields.hasErrors('documentName')}" th:errors="*{documentName}" style="color: red"></div>
+    <br>
+    <label>Тип документа</label>
+    <input th:field="*{documentType}" class="form-control" type="text" name="documentType">
+    <div th:if="${#fields.hasErrors('documentType')}" th:errors="*{documentType}" style="color: red"></div>
+    <br>
+    <label>Комментарий</label>
+    <input th:field="*{commentary}" class="form-control" type="text" name="commentary">
+    <div th:if="${#fields.hasErrors('commentary')}" th:errors="*{commentary}" style="color: red"></div>
+    <br>
+    <label>Раздел</label>
+    <select th:field="*{subdivision}">
+        <option th:each="element : ${subdivisions}" th:text="${element.subdivisionName}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <input class="btn btn-success" type="submit" value="Добавить отчет разделов">
+    <a class="btn btn-danger" href="/subdivisionreporting/">Назад</a>
+</form>
+</body>
+</html>

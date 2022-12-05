@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Контроль поставки</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<div class="container">
+    <h1 th:text="'Наименование документа: ' + ${one_inventorycontrol.documentName}"></h1>
+    <div class="container">
+        <p th:text="'Склад: ' + ${one_inventorycontrol.getWarehouse()}"></p>
+        <p th:text="'Дата: ' + ${one_inventorycontrol.getDate()}"></p>
+        <p th:text="'Номер накладной: ' + ${one_inventorycontrol.getInvoiceNumber()}"></p>
+        <p th:text="'Стоимость: ' + ${one_inventorycontrol.getCost()}"></p>
+        <div th:each="sys : ${one_inventorycontrol.delivery}">
+            <p th:text="'Поставка: ' + ${sys.dateDelivery}"></p>
+        </div>
+    </div>
+    <a th:href="'/inventorycontrol/detail/' + ${one_inventorycontrol.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/inventorycontrol/detail/' + ${one_inventorycontrol.UID} + '/del'" method="get">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/inventorycontrol/" class="btn btn-success">Назад</a>
+</div>
+</body>
+</html>

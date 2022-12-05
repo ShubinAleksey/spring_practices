@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>Добавление размера продукта</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Добавить размер продукта</h1>
+<form method="post" th:object="${sizeProduct}" th:action="${'/sizeproduct/add'}">
+    <label>Наименование размера</label>
+    <input th:field="*{sizeName}" class="form-control" type="text" name="sizeName">
+    <div th:if="${#fields.hasErrors('sizeName')}" th:errors="*{sizeName}" style="color: red"></div>
+    <br>
+    <input class="btn btn-success" type="submit" value="Добавить размер продукта">
+    <a class="btn btn-danger" href="/sizeproduct/">Назад</a>
+</form>
+</body>
+</html>

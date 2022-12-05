@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование поставки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Редактировать поставку</h1>
+<form method="post" th:object="${delivery}" th:action="'/delivery/detail/' + *{getUID()} + '/upd'">
+    <label>Дата поставки</label>
+    <input th:field="*{dateDelivery}" class="form-control" type="date" name="dateDelivery">
+    <div th:if="${#fields.hasErrors('dateDelivery')}" th:errors="*{dateDelivery}" style="color: red"></div>
+    <br>
+    <label>Цена поставки</label>
+    <input th:field="*{priceDelivery}" class="form-control" type="number" name="priceDelivery">
+    <div th:if="${#fields.hasErrors('priceDelivery')}" th:errors="*{priceDelivery}" style="color: red"></div>
+    <br>
+    <label>Количество</label>
+    <input th:field="*{amount}" class="form-control" type="number" name="amount">
+    <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" style="color: red"></div>
+    <br>
+    <label>Поставщик</label>
+    <select th:field="*{suppliers}">
+        <option th:each="element : ${suppliers}" th:text="${element.suppliersName}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <label>Кассир</label>
+    <select th:field="*{product}">
+        <option th:each="element : ${products}" th:text="${element.productName}" th:value="${element.UID}"></option>
+    </select>
+    <br>
+    <input class="btn btn-success" type="submit" value="Редактировать поставку">
+    <a class="btn btn-danger" href="/delivery/">Назад</a>
+</form>
+</body>
+</html>

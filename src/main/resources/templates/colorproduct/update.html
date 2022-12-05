@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование цвета продукта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Редактировать цвет продукта</h1>
+<form method="post" th:object="${colorproduct}" th:action="'/colorproduct/detail/' + *{getUID()} + '/upd'">
+    <label>Наименование цвета</label>
+    <input th:field="*{colorName}" class="form-control" type="text" name="colorName">
+    <div th:if="${#fields.hasErrors('colorName')}" th:errors="*{colorName}" style="color: red"></div>
+    <br>
+    <input class="btn btn-success" type="submit" value="Редактировать цвет продукта">
+    <a class="btn btn-danger" href="/colorproduct/">Назад</a>
+</form>
+</body>
+</html>

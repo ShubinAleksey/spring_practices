@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Чек</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Чек</h1>
+<div>
+    <form method="get" action="/check/filter/">
+        <input class="form-control" name="name" type="text" placeholder="Конкретный поиск" width="100">
+        <input class="btn btn-info" value="Найти" type="submit">
+    </form>
+    <form method="get" action="/check/filtercontains/">
+        <input class="form-control" name="name" type="text" placeholder="Поиск по ключу" width="100">
+        <input class="btn btn-info" value="Найти" type="submit">
+    </form>
+</div>
+<a href="/check/add" class="btn btn-success">Добавить чек</a>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Номер чека</th>
+            <th>ИНН</th>
+            <th>Дата печати</th>
+            <th>Наименование заказа</th>
+            <th>Кассир</th>
+            <th>Действие</th>
+        </tr>
+        <tr th:each="el : ${check_list}">
+            <td th:text="${el.checkNumber}"></td>
+            <td th:text="${el.ITN}"></td>
+            <td th:text="${el.dateOfSeal}"></td>
+            <div th:each="sys : ${el.order}">
+                <td th:text="${sys.orderName}"></td>
+            </div>
+            <div th:each="sysy : ${el.user}">
+                <td th:text="${sysy.surname}"></td>
+            </div>
+            <td>
+                <a class="btn btn-primary" th:href="'/check/detail/'+${el.UID}">Подробнее</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

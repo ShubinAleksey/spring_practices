@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Цвет продукта</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<div class="container">
+    <h1 th:text="'Цвет продукта: ' + ${one_colorproduct.colorName}"></h1>
+    <a th:href="'/colorproduct/detail/' + ${one_colorproduct.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/colorproduct/detail/' + ${one_colorproduct.UID} + '/del'" method="get">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/colorproduct/" class="btn btn-success">Назад</a>
+</div>
+</body>
+</html>

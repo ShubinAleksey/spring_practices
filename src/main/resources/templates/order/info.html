@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<div class="container">
+    <h1 th:text="'Наименование заказа: ' + ${one_order.orderName}"></h1>
+    <div class="container">
+        <p th:text="'Дата покупки: ' + ${one_order.getPurchaseDate()}"></p>
+        <p th:text="'Количество: ' + ${one_order.getAmount()}"></p>
+        <div th:each="sys : ${one_order.product}">
+            <p th:text="'Продукт: ' + ${sys.productName}"></p>
+        </div>
+        <div th:each="sys : ${one_order.user}">
+            <p th:text="'Покупатель: ' + ${sys.surname}"></p>
+        </div>
+    </div>
+    <a th:href="'/order/detail/' + ${one_order.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/order/detail/' + ${one_order.UID} + '/del'" method="get">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    <a href="/order/" class="btn btn-success">Назад</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поставка</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Поставка</h1>
+<a href="/delivery/add" class="btn btn-success">Добавить поставку</a>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Дата поставки</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Поставщик</th>
+            <th>Продукт</th>
+            <th>Действие</th>
+        </tr>
+        <tr th:each="el : ${delivery_list}">
+            <td th:text="${el.dateDelivery}"></td>
+            <td th:text="${el.priceDelivery}"></td>
+            <td th:text="${el.amount}"></td>
+            <div th:each="sys : ${el.suppliers}">
+                <td th:text="${sys.suppliersName}"></td>
+            </div>
+            <div th:each="sysy : ${el.product}">
+                <td th:text="${sysy.productName}"></td>
+            </div>
+            <td>
+                <a class="btn btn-primary" th:href="'/delivery/detail/'+${el.UID}">Подробнее</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

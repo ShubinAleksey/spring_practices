@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ</title>
+    <style>
+        th, td {
+            border: solid black;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Заказ</h1>
+<div>
+    <form method="get" action="/order/filter/">
+        <input class="form-control" name="name" type="text" placeholder="Конкретный поиск" width="100">
+        <input class="btn btn-info" value="Найти" type="submit">
+    </form>
+    <form method="get" action="/order/filtercontains/">
+        <input class="form-control" name="name" type="text" placeholder="Поиск по ключу" width="100">
+        <input class="btn btn-info" value="Найти" type="submit">
+    </form>
+</div>
+<a href="/order/add" class="btn btn-success">Добавить заказ</a>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Наименование заказа</th>
+            <th>Дата покупки</th>
+            <th>Количество</th>
+            <th>Продукт</th>
+            <th>Покупатель</th>
+            <th>Действие</th>
+        </tr>
+        <tr th:each="el : ${order_list}">
+            <td th:text="${el.orderName}"></td>
+            <td th:text="${el.purchaseDate}"></td>
+            <td th:text="${el.amount}"></td>
+            <div th:each="sys : ${el.product}">
+                <td th:text="${sys.productName}"></td>
+            </div>
+            <div th:each="sysy : ${el.user}">
+                <td th:text="${sysy.surname}"></td>
+            </div>
+            <td>
+                <a class="btn btn-primary" th:href="'/order/detail/'+${el.UID}">Подробнее</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

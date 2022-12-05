@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование поставщика</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="/fragments/header :: headerMain"></header>
+<h1>Редактировать поставщика</h1>
+<form method="post" th:object="${suppliers}" th:action="'/suppliers/detail/' + *{getUID()} + '/upd'">
+    <label>Наименование поставщика</label>
+    <input th:field="*{suppliersName}" class="form-control" type="text" name="suppliersName">
+    <div th:if="${#fields.hasErrors('suppliersName')}" th:errors="*{suppliersName}" style="color: red"></div>
+    <br>
+    <label>ИНН</label>
+    <input th:field="*{ITN}" class="form-control" type="text" name="ITN">
+    <div th:if="${#fields.hasErrors('ITN')}" th:errors="*{ITN}" style="color: red"></div>
+    <br>
+    <label>Юридический адресс</label>
+    <input th:field="*{legalAddress}" class="form-control" type="text" name="legalAddress">
+    <div th:if="${#fields.hasErrors('legalAddress')}" th:errors="*{legalAddress}" style="color: red"></div>
+    <br>
+    <label>ОГРН</label>
+    <input th:field="*{PSRN}" class="form-control" type="text" name="PSRN">
+    <div th:if="${#fields.hasErrors('PSRN')}" th:errors="*{PSRN}" style="color: red"></div>
+    <br>
+    <label>Телефон</label>
+    <input th:field="*{telephone}" class="form-control" type="number" name="telephone">
+    <div th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" style="color: red"></div>
+    <br>
+    <label>Почта</label>
+    <input th:field="*{email}" class="form-control" type="text" name="email">
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red"></div>
+    <br>
+    <input class="btn btn-success" type="submit" value="Редактировать поставщика">
+    <a class="btn btn-danger" href="/suppliers/">Назад</a>
+</form>
+</body>
+</html>
