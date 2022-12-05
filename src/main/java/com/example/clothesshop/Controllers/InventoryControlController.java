@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/inventorycontrol")
+@PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
 public class InventoryControlController {
     @Autowired
     InventoryControlRepository inventoryControlRepository;
@@ -30,7 +31,6 @@ public class InventoryControlController {
         return "/inventorycontrol/inventorycontrol";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/add")
     public String AddView(InventoryControl inventoryControl, Model model) {
         Iterable<Delivery> deliveries = deliveryRepository.findAll();
@@ -38,7 +38,6 @@ public class InventoryControlController {
         return "inventorycontrol/inventorycontrol-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("inventoryControl") @Valid InventoryControl inventoryControl, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -77,7 +76,6 @@ public class InventoryControlController {
         return "/inventorycontrol/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         InventoryControl inventorycontrol_obj = inventoryControlRepository.findById(id).orElseThrow();
@@ -85,7 +83,6 @@ public class InventoryControlController {
         return "redirect:/inventorycontrol/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<InventoryControl> inventoryControl = inventoryControlRepository.findById(id);
@@ -97,7 +94,6 @@ public class InventoryControlController {
         return "inventorycontrol/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("inventoryControl") @Valid InventoryControl inventoryControl,
                              BindingResult bindingResult,

@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
-@Table(name = "supplierses")
+@Table(name = "suppliers")
 public class Suppliers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

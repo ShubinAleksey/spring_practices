@@ -28,6 +28,7 @@ public class OrderController {
     @Autowired
     UserRepository userRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Order> orderIterable = orderRepository.findAll();
@@ -35,7 +36,7 @@ public class OrderController {
         return "/order/order";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER')")
     @GetMapping("/add")
     public String AddView(Order order, Model model) {
         Iterable<Product> products = productRepository.findAll();
@@ -45,7 +46,7 @@ public class OrderController {
         return "order/order-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("order") @Valid Order order, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -59,6 +60,7 @@ public class OrderController {
         return "redirect:/order/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String order_name,
@@ -68,6 +70,7 @@ public class OrderController {
         return "order/order";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String order_name,
@@ -77,6 +80,7 @@ public class OrderController {
         return "order/order";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/detail/{id}")
     public String detailStar(
             @PathVariable Long id,
@@ -86,7 +90,7 @@ public class OrderController {
         return "/order/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         Order order_obj = orderRepository.findById(id).orElseThrow();
@@ -94,7 +98,7 @@ public class OrderController {
         return "redirect:/order/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<Order> order = orderRepository.findById(id);
@@ -104,11 +108,11 @@ public class OrderController {
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("products", products);
         model.addAttribute("users", users);
-        model.addAttribute("check",orderArrayList.get(0));
+        model.addAttribute("order",orderArrayList.get(0));
         return "order/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("order") @Valid Order order,
                              BindingResult bindingResult,

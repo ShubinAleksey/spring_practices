@@ -18,6 +18,7 @@ public class SizeProductController {
     @Autowired
     SizeProductRepository sizeProductRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<SizeProduct> sizeProductIterable = sizeProductRepository.findAll();
@@ -41,6 +42,7 @@ public class SizeProductController {
         return "redirect:/sizeproduct/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String size_name,
@@ -50,6 +52,7 @@ public class SizeProductController {
         return "sizeproduct/sizeproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String size_name,
@@ -59,6 +62,7 @@ public class SizeProductController {
         return "sizeproduct/sizeproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/detail/{id}")
     public String detailGalaxy(
             @PathVariable Long id,

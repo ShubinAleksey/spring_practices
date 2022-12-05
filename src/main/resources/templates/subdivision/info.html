@@ -13,9 +13,9 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <div class="container">
-    <h1 th:text="'Наименование раздела: ' + ${one_subdivision.subdivisionName}"></h1>
-    <a th:href="'/sizeproduct/detail/' + ${one_subdivision.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
-    <form th:action="'/sizeproduct/detail/' + ${one_subdivision.UID} + '/del'" method="get">
+    <h1 th:text="'Наименование раздела: ' + ${one_subdivision.getSubdivisionName()}"></h1>
+    <a th:href="'/subdivision/detail/' + ${one_subdivision.UID} + '/upd'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/subdivision/detail/' + ${one_subdivision.UID} + '/del'" method="get">
         <button type="submit" class="btn btn-danger">Удалить</button>
     </form>
     <a href="/subdivision/" class="btn btn-success">Назад</a>

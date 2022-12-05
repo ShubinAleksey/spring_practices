@@ -19,10 +19,11 @@ public class SubdivisionController {
     @Autowired
     SubdivisionRepository subdivisionRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Subdivision> subdivisionIterable = subdivisionRepository.findAll();
-        model.addAttribute("subdivision_list",subdivisionIterable);
+        model.addAttribute("subdivisions_list",subdivisionIterable);
         return "/subdivision/subdivision";
     }
 
@@ -42,6 +43,7 @@ public class SubdivisionController {
         return "redirect:/subdivision/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String subdivision_name,
@@ -51,6 +53,7 @@ public class SubdivisionController {
         return "subdivision/subdivision";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String subdivision_name,
@@ -60,6 +63,7 @@ public class SubdivisionController {
         return "subdivision/subdivision";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/detail/{id}")
     public String detailGalaxy(
             @PathVariable Long id,

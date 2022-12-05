@@ -26,6 +26,7 @@ public class ProductController {
     @Autowired
     ColorProductRepository colorProductRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','USER','PURCHASER','MERCHANDISER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Product> productIterable = productRepository.findAll();
@@ -61,6 +62,7 @@ public class ProductController {
         return "redirect:/product/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','USER','PURCHASER','MERCHANDISER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String product_name,
@@ -70,6 +72,7 @@ public class ProductController {
         return "product/product";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','USER','PURCHASER','MERCHANDISER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String product_name,
@@ -79,6 +82,7 @@ public class ProductController {
         return "product/product";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','USER','PURCHASER','MERCHANDISER')")
     @GetMapping("/detail/{id}")
     public String detailStar(
             @PathVariable Long id,

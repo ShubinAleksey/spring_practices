@@ -16,12 +16,12 @@ public class Delivery {
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDelivery;
-    @NotEmpty(message= "Данное поле не может быть пустым")
+    @NotNull(message = "Данное поле не может быть пустым")
     @Min(value = 200, message = "Укажите цену продукта не ниже 200 рублей")
     @Max(value = 50000, message = "Укажите цену продукта не выше 50000 рублей")
-    private double priceDelivery;
-    @NotBlank(message="Данное поле не может состоять из пробелов")
-    @NotEmpty(message= "Данное поле не может быть пустым")
+    private Integer priceDelivery;
+
+    @NotNull(message = "Данное поле не может быть пустым")
     @Min(value = 1, message = "Количество товаров должно быть не меньше 1")
     private Integer amount;
 
@@ -31,14 +31,14 @@ public class Delivery {
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     public Product products;
 
-    @OneToOne(optional = true, mappedBy = "delivery", orphanRemoval = true)
+    @OneToOne(optional = true, mappedBy = "delivery")
     public InventoryControl inventoryControl;
 
     public Delivery() {
 
     }
 
-    public Delivery(Date dateDelivery, double priceDelivery, Integer amount, Suppliers suppliers, Product products, InventoryControl inventoryControl) {
+    public Delivery(Date dateDelivery, Integer priceDelivery, Integer amount, Suppliers suppliers, Product products, InventoryControl inventoryControl) {
         this.dateDelivery = dateDelivery;
         this.priceDelivery = priceDelivery;
         this.amount = amount;
@@ -63,11 +63,11 @@ public class Delivery {
         this.dateDelivery = dateDelivery;
     }
 
-    public double getPriceDelivery() {
+    public Integer getPriceDelivery() {
         return priceDelivery;
     }
 
-    public void setPriceDelivery(double priceDelivery) {
+    public void setPriceDelivery(Integer priceDelivery) {
         this.priceDelivery = priceDelivery;
     }
 

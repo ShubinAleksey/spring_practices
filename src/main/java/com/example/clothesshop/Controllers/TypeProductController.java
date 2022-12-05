@@ -18,6 +18,7 @@ public class TypeProductController {
     @Autowired
     TypeProductRepository typeProductRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<TypeProduct> typeProductIterable = typeProductRepository.findAll();
@@ -41,6 +42,7 @@ public class TypeProductController {
         return "redirect:/typeproduct/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String type_name,
@@ -50,6 +52,7 @@ public class TypeProductController {
         return "typeproduct/typeproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String type_name,
@@ -59,6 +62,7 @@ public class TypeProductController {
         return "typeproduct/typeproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/detail/{id}")
     public String detailGalaxy(
             @PathVariable Long id,
@@ -85,7 +89,9 @@ public class TypeProductController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @PostMapping("/detail/{id}/upd")
-    public String updateStar(@PathVariable Long id, @ModelAttribute("typeProduct") @Valid TypeProduct typeProduct, BindingResult bindingResult) {
+    public String updateStar(@PathVariable Long id,
+                             @ModelAttribute("typeProduct") @Valid TypeProduct typeProduct,
+                             BindingResult bindingResult) {
         if(!typeProductRepository.existsById(id)) {
             return "redirect:/typeproduct/";
         }

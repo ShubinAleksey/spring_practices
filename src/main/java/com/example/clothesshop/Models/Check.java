@@ -17,8 +17,7 @@ public class Check {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long UID;
 
-    @NotBlank(message="Данное поле не может состоять из пробелов")
-    @NotEmpty(message= "Данное поле не может быть пустым")
+    @NotNull(message= "Данное поле не может быть пустым")
     @Min(value = 1, message = "Номер чека не должен быть меньше 1")
     private Integer checkNumber;
     @NotBlank(message="Данное поле не может состоять из пробелов")

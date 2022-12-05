@@ -31,7 +31,7 @@
         <option th:each="element : ${suppliers}" th:text="${element.suppliersName}" th:value="${element.UID}"></option>
     </select>
     <br>
-    <label>Кассир</label>
+    <label>Товар</label>
     <select th:field="*{product}">
         <option th:each="element : ${products}" th:text="${element.productName}" th:value="${element.UID}"></option>
     </select>

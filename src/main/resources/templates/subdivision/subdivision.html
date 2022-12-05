@@ -30,7 +30,7 @@
             <th>Наименование раздела</th>
             <th>Действие</th>
         </tr>
-        <tr th:each="el : ${subdivision_list}">
+        <tr th:each="el : ${subdivisions_list}">
             <td th:text="${el.subdivisionName}"></td>
             <td>
                 <a class="btn btn-primary" th:href="'/subdivision/detail/'+${el.UID}">Подробнее</a>

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/subdivisionreporting")
+@PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
 public class SubdivisionReportingController {
     @Autowired
     SubdivisionReportingRepository subdivisionReportingRepository;
@@ -31,7 +32,6 @@ public class SubdivisionReportingController {
         return "/subdivisionreporting/subdivisionreporting";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/add")
     public String AddView(SubdivisionReporting subdivisionReporting, Model model) {
         Iterable<Subdivision> subdivisions = subdivisionRepository.findAll();
@@ -39,7 +39,6 @@ public class SubdivisionReportingController {
         return "subdivisionreporting/subdivisionreporting-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("subdivisionReporting") @Valid SubdivisionReporting subdivisionReporting, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -78,7 +77,6 @@ public class SubdivisionReportingController {
         return "/subdivisionreporting/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         SubdivisionReporting subdivisionReporting_obj = subdivisionReportingRepository.findById(id).orElseThrow();
@@ -86,7 +84,6 @@ public class SubdivisionReportingController {
         return "redirect:/subdivisionreporting/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<SubdivisionReporting> subdivisionReporting = subdivisionReportingRepository.findById(id);
@@ -94,11 +91,10 @@ public class SubdivisionReportingController {
         subdivisionReporting.ifPresent(subdivisionReportingArrayList::add);
         Iterable<Subdivision> subdivisions = subdivisionRepository.findAll();
         model.addAttribute("subdivisions", subdivisions);
-        model.addAttribute("inventorycontrol",subdivisionReportingArrayList.get(0));
+        model.addAttribute("subdivisionreporing",subdivisionReportingArrayList.get(0));
         return "subdivisionreporting/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASER')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("subdivisionReporting") @Valid SubdivisionReporting subdivisionReporting,
                              BindingResult bindingResult,

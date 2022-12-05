@@ -14,6 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/suppliers")
+@PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
 public class SuppliersController {
     @Autowired
     SuppliersRepository suppliersRepository;
@@ -25,13 +26,11 @@ public class SuppliersController {
         return "/suppliers/suppliers";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/add")
     public String AddView(Suppliers suppliers) {
         return "suppliers/suppliers-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("suppliers") @Valid Suppliers suppliers, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -68,7 +67,6 @@ public class SuppliersController {
         return "/suppliers/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/detail/{id}/del")
     public String delGalaxy(@PathVariable Long id) {
         Suppliers suppliers_obj = suppliersRepository.findById(id).orElseThrow();
@@ -76,14 +74,12 @@ public class SuppliersController {
         return "redirect:/suppliers/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model, Suppliers suppliers) {
         model.addAttribute("suppliers",suppliersRepository.findById(id).orElseThrow());
         return "suppliers/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("suppliers") @Valid Suppliers suppliers, BindingResult bindingResult) {
         if(!suppliersRepository.existsById(id)) {

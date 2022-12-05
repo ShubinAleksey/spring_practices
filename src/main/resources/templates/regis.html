@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Регистрация</title>
+    <link href="signin.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
-<body>
-<div th:if="${message}">
-    Пользователь уже существует (вывод вшитых данных)
-</div>
-<p th:text="${message}"></p>
-<form th:action="@{/registration}" method="post">
-    <div>
-        <label> Логин :
-            <input type="text" class="form-control" name="username" id="username"/>
-        </label>
-    </div>
-    <div>
-        <label> Пароль :
-            <input type="password" class="form-control" name="password"/>
-        </label>
-    </div>
-    <div>
-        <label> Фамилия :
-            <input type="text" class="form-control" name="surname"/>
-        </label>
-    </div>
-    <div>
-        <label> Имя :
-            <input type="text" class="form-control" name="name"/>
-        </label>
-    </div>
-    <div>
-        <label> Отчество :
-            <input type="text" class="form-control" name="middleName"/>
-        </label>
-    </div>
-    <div>
-        <label> Дата рождения :
-            <input type="date" class="form-control" name="dateOfBirthday"/>
-        </label>
-    </div>
-    <div>
-        <label> Телефон :
-            <input type="number" class="form-control" name="telephone"/>
-        </label>
-    </div>
-    <br>
-    <div>
-        <input type="submit" class="btn btn-success" value="Зарегистрироваться"/>
-    </div>
-</form>
+<body class="text-center">
+<main class="form-signin w-100 m-auto">
+    <form>
+        <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+        <div th:if="${message}">
+            Пользователь уже существует (вывод вшитых данных)
+        </div>
+        <p th:text="${message}"></p>
+        <form th:action="@{/registration}" method="post">
+            <div class="form-floating">
+                <input type="text" class="form-control" name="username" id="floatingInput" placeholder="username@example"/>
+                <label for="floatingInput">Логин</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password@example"/>
+                <label for="floatingPassword">Пароль</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="surname" id="floatingSurname" placeholder="surname@example"/>
+                <label for="floatingSurname">Фамилия</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="name" id="floatingName" placeholder="name@example"/>
+                <label for="floatingName">Имя</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="middleName" id="floatingMiddleName" placeholder="middleName@example"/>
+                <label for="floatingMiddleName">Отчество</label>
+            </div>
+            <div class="form-floating">
+                <input type="date" class="form-control" name="dateOfBirthday" id="floatingDate" placeholder="dateOfBirthday@example"/>
+                <label for="floatingDate">Дата рождения</label>
+            </div>
+            <div class="form-floating">
+                <input type="number" class="form-control" name="telephone" id="floatingTelephone" placeholder="telephone@example"/>
+                <label for="floatingTelephone">Телефон</label>
+            </div>
+            <br>
+            <div class="form-floating">
+                <input type="submit" class="btn btn-success" value="Зарегистрироваться"/>
+            </div>
+        </form>
+    </form>
+</main>
 </body>
 </html>

@@ -42,6 +42,7 @@ public class User {
 
     @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirthday;
 
     @NotBlank(message="Данное поле не может состоять из пробелов")

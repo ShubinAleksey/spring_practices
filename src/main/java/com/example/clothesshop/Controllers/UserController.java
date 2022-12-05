@@ -7,6 +7,7 @@ import com.example.clothesshop.Models.User;
 import com.example.clothesshop.Repository.SubdivisionRepository;
 import com.example.clothesshop.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String detailView(@PathVariable Long id, Model model) {
+        Iterable<Subdivision> subdivisions = subdivisionRepository.findAll();
+        model.addAttribute("subdivisions", subdivisions);
         model.addAttribute("user_object", userRepository.findById(id).orElseThrow());
         return "user/info";
     }
@@ -49,13 +52,12 @@ public class UserController {
                               @RequestParam String surname,
                               @RequestParam String name,
                               @RequestParam String middleName,
-                              @RequestParam Date dateOfBirthday,
+                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirthday,
                               @RequestParam String telephone,
                               @RequestParam(name = "roles[]", required = false) String[] roles,
                               @PathVariable Long id,
                               Model model) {
         User user = userRepository.findById(id).orElseThrow();
-        user.setUID(id);
         user.setUsername(username);
         user.setSurname(surname);
         user.setName(name);
@@ -72,6 +74,7 @@ public class UserController {
         }
         Iterable<Subdivision> subdivisions = subdivisionRepository.findAll();
         model.addAttribute("subdivisions", subdivisions);
+        user.setUID(id);
         userRepository.save(user);
         return "redirect:/admin/";
     }

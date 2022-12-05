@@ -18,6 +18,7 @@ public class ColorProductController {
     @Autowired
     ColorProductRepository colorProductRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<ColorProduct> colorProductIterable = colorProductRepository.findAll();
@@ -41,6 +42,7 @@ public class ColorProductController {
         return "redirect:/colorproduct/";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filter/")
     public String filter(
             @RequestParam(name = "name") String color_name,
@@ -50,6 +52,7 @@ public class ColorProductController {
         return "colorproduct/colorproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/filtercontains/")
     public String filterContains(
             @RequestParam(name = "name") String color_name,
@@ -59,6 +62,7 @@ public class ColorProductController {
         return "colorproduct/colorproduct";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER','MERCHANDISER')")
     @GetMapping("/detail/{id}")
     public String detailGalaxy(
             @PathVariable Long id,

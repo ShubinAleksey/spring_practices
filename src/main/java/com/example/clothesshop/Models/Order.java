@@ -19,8 +19,8 @@ public class Order {
     @FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate;
-    @NotBlank(message="Данное поле не может состоять из пробелов")
-    @NotEmpty(message= "Данное поле не может быть пустым")
+
+    @NotNull(message= "Данное поле не может быть пустым")
     @Min(value = 1, message = "Количество товаров должно быть не меньше 1")
     private Integer amount;
 

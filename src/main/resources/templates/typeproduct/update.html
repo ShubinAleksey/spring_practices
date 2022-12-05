@@ -8,7 +8,7 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Редактировать тип продукта</h1>
-<form method="post" th:object="${typeProduct}" th:action="'/typeproduct/detail/' + *{getUID()} + '/upd'">
+<form method="post" th:object="${typeproduct}" th:action="'/typeproduct/detail/' + *{getUID()} + '/upd'">
     <label>Наименование типа</label>
     <input th:field="*{typeName}" class="form-control" type="text" name="typeName">
     <div th:if="${#fields.hasErrors('typeName')}" th:errors="*{typeName}" style="color: red"></div>

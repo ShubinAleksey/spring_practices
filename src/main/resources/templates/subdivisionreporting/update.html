@@ -8,7 +8,7 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Редактировать отчет разделов</h1>
-<form method="post" th:object="${subdivisionReporting}" th:action="'/subdivisionreporting/detail/' + *{getUID()} + '/upd'">
+<form method="post" th:object="${subdivisionreporing}" th:action="'/subdivisionreporting/detail/' + *{getUID()} + '/upd'">
     <label>Наименование документа</label>
     <input th:field="*{documentName}" class="form-control" type="text" name="documentName">
     <div th:if="${#fields.hasErrors('documentName')}" th:errors="*{documentName}" style="color: red"></div>

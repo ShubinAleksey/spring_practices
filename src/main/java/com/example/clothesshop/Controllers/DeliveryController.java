@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/delivery")
+@PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
 public class DeliveryController {
     @Autowired
     DeliveryRepository deliveryRepository;
@@ -33,7 +34,6 @@ public class DeliveryController {
         return "/delivery/delivery";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/add")
     public String AddView(Delivery delivery, Model model) {
         Iterable<Suppliers> suppliers = suppliersRepository.findAll();
@@ -43,7 +43,6 @@ public class DeliveryController {
         return "delivery/delivery-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("delivery") @Valid Delivery delivery, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -66,7 +65,6 @@ public class DeliveryController {
         return "/delivery/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         Delivery delivery_obj = deliveryRepository.findById(id).orElseThrow();
@@ -74,7 +72,6 @@ public class DeliveryController {
         return "redirect:/delivery/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<Delivery> delivery = deliveryRepository.findById(id);
@@ -88,7 +85,6 @@ public class DeliveryController {
         return "delivery/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MERCHANDISER')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("delivery") @Valid Delivery delivery,
                              BindingResult bindingResult,

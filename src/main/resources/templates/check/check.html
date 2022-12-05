@@ -13,16 +13,6 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Чек</h1>
-<div>
-    <form method="get" action="/check/filter/">
-        <input class="form-control" name="name" type="text" placeholder="Конкретный поиск" width="100">
-        <input class="btn btn-info" value="Найти" type="submit">
-    </form>
-    <form method="get" action="/check/filtercontains/">
-        <input class="form-control" name="name" type="text" placeholder="Поиск по ключу" width="100">
-        <input class="btn btn-info" value="Найти" type="submit">
-    </form>
-</div>
 <a href="/check/add" class="btn btn-success">Добавить чек</a>
 <div class="container">
     <table class="table">

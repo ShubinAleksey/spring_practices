@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "subdivisionreportings")
+@Table(name = "subdivisionReporting")
 public class SubdivisionReporting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class SubdivisionReporting {
     @Size(min = 5, max = 40, message="Длина значения должна быть в диапозоне от 5 до 40 символов")
     private String documentName;
     @NotEmpty(message= "Данное поле не может быть пустым")
-    @Size(min = 5, max = 10, message="Длина значения должна быть в диапозоне от 5 до 10 символов")
+    @Size(min = 5, max = 30, message="Длина значения должна быть в диапозоне от 5 до 10 символов")
     private String documentType;
     @NotEmpty(message= "Данное поле не может быть пустым")
     @Size(min = 5, max = 100, message="Длина значения должна быть в диапозоне от 5 до 100 символов")

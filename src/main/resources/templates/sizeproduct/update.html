@@ -8,7 +8,7 @@
 <body>
 <header th:insert="/fragments/header :: headerMain"></header>
 <h1>Редактировать размер продукта</h1>
-<form method="post" th:object="${sizeProduct}" th:action="'/sizeproduct/detail/' + *{getUID()} + '/upd'">
+<form method="post" th:object="${sizeproduct}" th:action="'/sizeproduct/detail/' + *{getUID()} + '/upd'">
     <label>Наименование размера</label>
     <input th:field="*{sizeName}" class="form-control" type="text" name="sizeName">
     <div th:if="${#fields.hasErrors('sizeName')}" th:errors="*{sizeName}" style="color: red"></div>

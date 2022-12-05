@@ -18,6 +18,7 @@ public class Product {
     @Size(min = 4, max = 50, message="Длина значения должна быть в диапозоне от 4 до 50")
     private String productName;
 
+    @NotNull(message = "Данное поле не должно быть пустым")
     @Min(value = 200, message = "Укажите цену продукта не ниже 200 рублей")
     @Max(value = 50000, message = "Укажите цену продукта не выше 50000 рублей")
     private Integer productPrice;
@@ -31,10 +32,10 @@ public class Product {
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     public ColorProduct colorProduct;
 
-    @OneToMany(mappedBy = "products", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "products", fetch = FetchType.EAGER)
     public Set<Delivery> delivery = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     public Set<Order> order = new HashSet<>();
 
     public Product() {

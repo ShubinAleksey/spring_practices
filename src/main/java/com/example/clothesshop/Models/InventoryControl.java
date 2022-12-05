@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "inventorycontrols")
+@Table(name = "inventoryControls")
 public class InventoryControl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,11 @@ public class InventoryControl {
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    @Null
-    @NotBlank(message="Данное поле не может состоять из пробелов")
+
     @Min(value = 10000, message = "Номер накладной должен быть не меньше 10000")
     @Max(value = 999999999, message = "Номер накладной должен быть не больше 999999999")
     private Integer invoiceNumber;
-    @NotEmpty(message= "Данное поле не может быть пустым")
+    @NotNull(message= "Данное поле не может быть пустым")
     @Min(value = 200, message = "Укажите цену продукта не ниже 200 рублей")
     @Max(value = 50000, message = "Укажите цену продукта не выше 50000 рублей")
     private double cost;

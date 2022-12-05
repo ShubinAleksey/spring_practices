@@ -30,6 +30,7 @@ public class CheckController {
     @Autowired
     UserRepository userRepository;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Check> checkIterable = checkRepository.findAll();
@@ -37,7 +38,7 @@ public class CheckController {
         return "/check/check";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @GetMapping("/add")
     public String AddView(Check check, Model model) {
         Iterable<Order> orders = orderRepository.findAll();
@@ -47,7 +48,7 @@ public class CheckController {
         return "check/check-add";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @PostMapping("/add")
     public String AddStar(@ModelAttribute("check") @Valid Check check, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -61,24 +62,7 @@ public class CheckController {
         return "redirect:/check/";
     }
 
-    @GetMapping("/filter/")
-    public String filter(
-            @RequestParam(name = "name") Integer check_number,
-            Model model) {
-        List<Check> checkList = checkRepository.findByCheckNumber(check_number);
-        model.addAttribute("check_list", checkList);
-        return "check/check";
-    }
-
-    @GetMapping("/filtercontains/")
-    public String filterContains(
-            @RequestParam(name = "name") Integer check_number,
-            Model model) {
-        List<Check> checkList = checkRepository.findByCheckNumberContains(check_number);
-        model.addAttribute("check_list", checkList);
-        return "check/check";
-    }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER','CASHIER','PURCHASER')")
     @GetMapping("/detail/{id}")
     public String detailStar(
             @PathVariable Long id,
@@ -88,7 +72,7 @@ public class CheckController {
         return "/check/info";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @GetMapping("/detail/{id}/del")
     public String delStars(@PathVariable Long id) {
         Check check_obj = checkRepository.findById(id).orElseThrow();
@@ -96,7 +80,7 @@ public class CheckController {
         return "redirect:/check/";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(@PathVariable Long id, Model model) {
         Optional<Check> check = checkRepository.findById(id);
@@ -110,7 +94,7 @@ public class CheckController {
         return "check/update";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','CASHIER')")
     @PostMapping("/detail/{id}/upd")
     public String updateStar(@PathVariable Long id, @ModelAttribute("check") @Valid Check check,
                              BindingResult bindingResult,
